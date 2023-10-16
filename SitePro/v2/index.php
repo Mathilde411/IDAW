@@ -1,30 +1,10 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css" type="text/css">
-    <title>Accueil</title>
-</head>
-<body>
-<header>
-    <div class="titre">
-        <h1>Accueil</h1>
-    </div>
-    <div class="photo">
-        <img src="ma_photo.png" alt="Ma photo"/>
-    </div>
-</header>
+
+<?php require_once("templates/header.php");?>
 <div class="page-body">
-    <nav class="menu">
-        <div class="titre">
-            <h3>Menu</h3>
-        </div>
-        <ul>
-            <li class="current"><a href="index.html">Accueil</a></li>
-            <li><a href="cv.html">CV</a></li>
-            <li><a href="hobbies.html">Hobbies</a></li>
-        </ul>
-    </nav>
+    <?php
+    require_once("templates/menu.php");
+    renderMenu("index");
+    ?>
     <div class="content">
         <h2>Bienvenue sur la page personelle de Sarah !</h2>
         <p>
@@ -72,8 +52,4 @@
         </p>
     </div>
 </div>
-<footer>
-
-</footer>
-</body>
-</html>
+<?php require_once("templates/footer.php") ?>
