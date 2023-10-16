@@ -1,0 +1,17 @@
+{
+    "name": "mathilde/tp4",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mathilde PASCAL",
+            "email": "mathilde.pascal@etu.imt-nord-europe.fr"
+        }
+    ],
+    "require": {
+        "ext-pdo": "*"
+    }
+}
