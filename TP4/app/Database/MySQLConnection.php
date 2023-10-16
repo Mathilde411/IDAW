@@ -21,7 +21,7 @@ class MySQLConnection extends DbConnection
             $pdo = new PDO($connectionString, $config['user'], $config['password'], $options);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
-        catch (PDOException $erreur) {
+        catch (PDOException $error) {
             return false;
         }
         $this->connection = $pdo;

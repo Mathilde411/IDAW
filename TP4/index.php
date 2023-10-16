@@ -1,10 +1,12 @@
 <?php
+
+use App\Facade\App;
+use App\Model\User;
+
 require __DIR__.'/vendor/autoload.php';
 
-$mysqlConfig = require("config/database.php");
+$app = require __DIR__.'/bootstrap/app.php';
 
-$app = new App\App();
+$db = new User();
 
-$app->bind(\App\Database\DbConnection::class, \App\Database\MySQLConnection::class, true);
-$test = $app->make(\App\Database\DbConnection::class, ['config' => $mysqlConfig]);
-echo "Test";
+echo config("database.host", "nop");

@@ -1,18 +1,19 @@
 <?php
 namespace App;
+use App\Facade\Facade;
 use App\Util\ReflectionUtil;
 use Closure;
 use ReflectionException;
 
-class App
+class Application
 {
-    protected static ?App $instance = null;
+    protected static ?Application $instance = null;
 
-    public static function getInstance() : ?App {
+    public static function getInstance() : ?Application {
         return static::$instance;
     }
 
-    public static function setInstance(?App $instance) : void {
+    public static function setInstance(?Application $instance) : void {
         static::$instance = $instance;
     }
 
@@ -20,17 +21,29 @@ class App
 
     protected array $sharedInstances = [];
 
-    /**
-     * @throws ReflectionException
-     */
-    public function __construct()
-    {
-        $this->setupFirstBindings();
-    }
+    protected $basePath;
 
     /**
      * @throws ReflectionException
      */
+    public function __construct($basePath)
+    {
+        $this->setBasePath($basePath);
+        $this->setupFirstBindings();
+        $this->bootstrap();
+    }
+
+    public function setBasePath($basePath)
+    {
+        $this->basePath = rtrim($basePath, '\/');
+    }
+
+    public function getBasePath()
+    {
+        return $this->basePath;
+    }
+
+
     public function bind(string $abstract, Closure|string|null $concrete = null, bool $shared = false): void
     {
         if(isset($this->sharedInstances[$abstract]))
@@ -52,6 +65,11 @@ class App
             'shared' => $shared,
             'parameters' => $parameters
         ];
+    }
+
+    public function singleton($abstract, $concrete = null)
+    {
+        $this->bind($abstract, $concrete, true);
     }
 
     public function isBound(string $abstract) : bool {
@@ -108,6 +126,12 @@ class App
     private function setupFirstBindings() {
         static::setInstance($this);
         $this->instance('app', $this);
+        $this->instance(Application::class, $this);
+    }
+
+    private function bootstrap()
+    {
+        Facade::setFacadeApplication($this);
     }
 
 
