@@ -1,8 +1,11 @@
 <?php
 namespace App;
+use App\Config\Config;
 use App\Facade\Facade;
+use App\Services\ServiceProvider;
 use App\Util\ReflectionUtil;
 use Closure;
+use ReflectionClass;
 use ReflectionException;
 
 class Application
@@ -20,6 +23,8 @@ class Application
     protected array $bindings = [];
 
     protected array $sharedInstances = [];
+
+    protected array $serviceProviders = [];
 
     protected $basePath;
 
@@ -127,12 +132,34 @@ class Application
         static::setInstance($this);
         $this->instance('app', $this);
         $this->instance(Application::class, $this);
+
+        $config = new Config($this);
+        $this->instance(Config::class, $config);
+        $this->instance('config', $config);
     }
 
     private function bootstrap()
     {
         Facade::setFacadeApplication($this);
+        $this->registerServiceProviders();
     }
 
+    private function registerServiceProviders() {
+        $services = \App\Facade\Config::get('app.services', []);
 
+        foreach ($services as $serviceClass) {
+
+            try {
+                $class = new ReflectionClass($serviceClass);
+
+                if(!$class->isSubclassOf(ServiceProvider::class))
+                    continue;
+                $serviceInstance = $class->newInstance($this);
+                $serviceInstance->register();
+                $this->serviceProviders[] = $serviceInstance;
+            } catch (ReflectionException $e) {
+                continue;
+            }
+        }
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Database;
 
 use App\Application;
+use App\Facade\Config;
 
 class DatabaseManager
 {
@@ -10,7 +11,7 @@ class DatabaseManager
 
     public function __construct(protected Application $app)
     {
-        $type = config('database.type');
+        $type = Config::get('database.type');
         if(isset($type)) {
             switch ($type) {
                 case 'mysql':
@@ -19,7 +20,7 @@ class DatabaseManager
         }
 
         if(isset($this->connection))
-            $this->connection->connect(config('database'));
+            $this->connection->connect(Config::get('database'));
     }
 
     public function connection() {

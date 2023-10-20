@@ -22,7 +22,7 @@ class Config
         return true;
     }
 
-    public function getConfig(string $key, mixed $default = null) {
+    public function get(string $key, mixed $default = null) {
         $components = explode('.', $key);
         if(!isset($cache[$components[0]])) {
             if(!$this->loadConfig($components[0])) {

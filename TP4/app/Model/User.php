@@ -6,10 +6,9 @@ class User extends Model
 {
     protected static string $table = "users";
 
-    protected static array $attributes = [
-        'id',
-        'name',
-        'email',
-        'password'
+    protected static array $publicAttributes = [
+        "id",
+        "name",
+        "email"
     ];
 }

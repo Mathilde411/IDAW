@@ -22,7 +22,7 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
 if ($successfullyLogged) {
     session_start();
     $_SESSION["username"] = $login;
-    header("Location: index.php");
+    header("Location: uers.php");
 } else {
     header("Location: login.php");
 }

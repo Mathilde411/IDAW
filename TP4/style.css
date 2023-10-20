@@ -1,0 +1,13 @@
+body > table, body >  table th, body > table td {
+    border: 1px solid;
+}
+
+body > table th, body > table td {
+    margin: 0;
+    padding: 5px;
+}
+
+body > form {
+    margin-top: 20px;
+}
+
