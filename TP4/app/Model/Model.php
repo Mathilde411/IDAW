@@ -70,7 +70,7 @@ class Model implements JsonSerializable
             return in_array($key, static::$publicAttributes);
         }, ARRAY_FILTER_USE_KEY);
 
-        return json_encode($attr);
+        return $attr;
     }
 
     public function __get(string $name)

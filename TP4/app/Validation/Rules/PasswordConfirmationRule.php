@@ -22,12 +22,12 @@ class PasswordConfirmationRule extends RequiredRule
 
     public function validate(string $var, mixed $value): bool
     {
-        if(!isset($data[$this->passwordField]))
+        if(!isset($this->data[$this->passwordField]))
             return false;
 
         parent::validate($var, $value);
 
-        if($data[$this->passwordField] != $value)
+        if($this->data[$this->passwordField] != $value)
             throw new ValidationError($this->passwordField . " ne correspond pas à " . $var . ".");
 
         return true;

@@ -27,7 +27,7 @@ class LengthRule extends ValidationRule
      */
     public function validate(string $var, mixed $value): bool
     {
-        $len = count($value);
+        $len = strlen($value);
         if($len < $this->minLength)
             throw new ValidationError($var . " doit être plus grand que " . $this->minLength . " caractères.");
         if($len > $this->maxLength)
