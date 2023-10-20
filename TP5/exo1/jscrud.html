@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Email</th>
+        <th scope="col">CRUD</th>
+    </tr>
+    </thead>
+    <tbody id="studentsTableBody">
+    </tbody>
+</table>
+<form id="addStudentForm" action="">
+    <div class="form-group">
+        <label for="inputNom" class="col-sm-2 col-form-label">Nom* :</label>
+        <input type="text" id="inputNom" name="name">
+        <span id="nameError"></span>
+    </div>
+    <div class="form-group">
+        <label for="inputPrenom" class="col-sm-2 col-form-label">Email* :</label>
+        <input type="email" id="inputPrenom" name="email">
+        <span id="emailError"></span>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Mot de passe :</label>
+        <input type="password" id="inputPassword" name="password">
+        <span id="passwordError"></span>
+    </div>
+    <div class="form-group">
+        <label for="inputConfirm" class="col-sm-2 col-form-label">Confirmation :</label>
+        <input type="password" id="inputConfirm" name="confirm">
+        <span id="confirmError"></span>
+    </div>
+    <div class="form-group">
+        <button id="submitButton" type="submit" class="btn btn-primary form-control">Submit</button>
+    </div>
+</form>
+<script>
+    const form = document.getElementById("addStudentForm");
+    const nameError = document.getElementById("nameError");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+    const confirmError = document.getElementById("confirmError");
+    const studentsTableBody = document.getElementById("studentsTableBody");
+
+    var currentEdit = undefined;
+
+
+    function createEditFunction() {
+
+    }
+
+    function addHtmlTableEntry(id, name, email) {
+        const tr = studentsTableBody.insertRow();
+
+        tr.insertCell().textContent = id;
+        tr.insertCell().textContent = name;
+        tr.insertCell().textContent = email;
+
+        const crudCell = tr.insertCell();
+
+        const edit = document.createElement("button")
+        edit.textContent = "Modifier";
+
+        const del = document.createElement("button")
+        del.textContent = "Supprimer";
+
+        crudCell.append(edit)
+        crudCell.append(del)
+    }
+
+    function createEntry() {
+
+        const formData = new FormData(form);
+
+        var error = false;
+
+        if(!formData.has("name") || formData.get("name") === "") {
+            nameError.textContent = "Le nom doit être fourni !"
+            error = true;
+        }
+
+        if(!formData.has("email") || formData.get("email") === "") {
+            emailError.textContent = "Le mail doit être fourni !"
+            error = true;
+        }
+
+        if(error)
+            return;
+
+        const id = "*";
+        const name = formData.get("name");
+        const email = formData.get("email");
+        addHtmlTableEntry(id, name, email);
+    }
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        createEntry();
+    });
+</script>
+</body>
+</html>
